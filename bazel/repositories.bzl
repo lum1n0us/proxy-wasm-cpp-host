@@ -65,3 +65,10 @@ def proxy_wasm_cpp_host_repositories():
         strip_prefix = "protobuf-655310ca192a6e3a050e0ca0b7084a2968072260",
         url = "https://github.com/protocolbuffers/protobuf/archive/655310ca192a6e3a050e0ca0b7084a2968072260.tar.gz",
     )
+
+    http_archive(
+        name = "wamr",
+        build_file = "@proxy_wasm_cpp_host//bazel/external:wamr.BUILD",
+        strip_prefix = "wamr_pre_release",
+        url = "https://github.com/lum1n0us/wasm-micro-runtime/releases/download/WAMR-01-29-2021/wamr_pre_release.zip",
+    )
