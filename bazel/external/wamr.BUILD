@@ -5,6 +5,9 @@ package(default_visibility = ["//visibility:public"])
 cc_library(
     name = "wamr_lib",
     hdrs = glob(["include/*.h"]),
+    defines = [
+        "ENVOY_WASM_WAMR",
+    ],
     includes = ["include"],
-    srcs = glob(["library/linux-classic_interp-multi_module/libiwasm.so"]),
+    srcs = glob(["library/libiwasm.so"]),
 )
