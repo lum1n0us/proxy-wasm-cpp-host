@@ -167,6 +167,7 @@ std::unique_ptr<WasmVm> Wamr::clone() {
   WasmByteVec stripped;
   clone->module_ =
       wasm_module_new(clone->store_.get(), getStrippedSource(&stripped) ? stripped.get() : source_.get());
+
   return clone;
 }
 
@@ -764,3 +765,5 @@ AbiVersion Wamr::getAbiVersion() {
 std::unique_ptr<WasmVm> createWamrVm() { return std::make_unique<wamr::Wamr>(); }
 
 } // namespace proxy_wasm
+
+
