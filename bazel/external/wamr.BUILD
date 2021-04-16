@@ -13,7 +13,6 @@ filegroup(
 cmake(
     name = "libiwasm",
     cache_entries = {
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "On",
         "WAMR_BUILD_AOT": "0",
         "WAMR_BUILD_SIMD": "0",
         "WAMR_BUILD_MULTI_MODULE": "1",
@@ -21,5 +20,4 @@ cmake(
     },
     lib_source = ":srcs",
     out_shared_libs = ["libiwasm.so"],
-    working_directory = "product-mini/platforms/linux"
 )
