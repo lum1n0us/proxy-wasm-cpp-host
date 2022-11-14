@@ -44,6 +44,7 @@ namespace proxy_wasm {
 
 std::vector<std::string> getWasmEngines();
 std::string readTestWasmFile(const std::string &filename);
+void readVmRSS(const std::string &tag);
 
 class TestIntegration : public WasmVmIntegration {
 public:

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "test/utility.h"
+#include <string>
+#include <fstream>
 
 namespace proxy_wasm {
 
@@ -48,5 +50,23 @@ std::string readTestWasmFile(const std::string &filename) {
   std::stringstream file_string_stream;
   file_string_stream << file.rdbuf();
   return file_string_stream.str();
+}
+
+void readVmRSS(const std::string &tag) {
+  std::cout << "==> " << tag << std::endl;
+  std::cout << "===== /proc/self/status =====" << std::endl;
+
+  std::ifstream file("/proc/self/status", std::ios::in);
+  std::string line;
+  while (std::getline(file, line)) {
+#ifdef LOG_FULL_MEM_INFO
+    if (line.rfind("Vm", 0) == 0 || line.rfind("Rss", 0) == 0 || line.rfind("Thread", 0) == 0)
+#else
+    if (line.rfind("VmRSS", 0) == 0 || line.rfind("RssAnon", 0) == 0)
+#endif
+      std::cout << line << std::endl;
+  }
+
+  std::cout << "==========" << std::endl;
 }
 } // namespace proxy_wasm

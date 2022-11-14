@@ -262,5 +262,77 @@ TEST_P(TestVm, Callback) {
   EXPECT_EQ(res.u32(), 100100); // 10000 (global) + 100 (in callback)
 }
 
+TEST_P(TestVm, BasicOne) {
+  readVmRSS("Before");
+
+  auto source = readTestWasmFile("test.wasm");
+  ASSERT_FALSE(source.empty());
+  readVmRSS("After readTestWasmFile");
+
+  auto base = TestWasm(std::move(vm_));
+  readVmRSS("After WasmBase::WasmBase()");
+
+  ASSERT_TRUE(base.load(source, false));
+  readVmRSS("After ::load()");
+
+  ASSERT_TRUE(base.initialize());
+  readVmRSS("After ::initialize()");
+}
+
+TEST_P(TestVm, BasicVM) {
+  readVmRSS("Before");
+
+  auto source = readTestWasmFile("test.wasm");
+  ASSERT_FALSE(source.empty());
+  readVmRSS("After readTestWasmFile");
+
+  auto base = TestWasm(std::move(vm_));
+  readVmRSS("After WasmBase::WasmBase()");
+
+  ASSERT_TRUE(base.load(source, false));
+  readVmRSS("After ::load()");
+
+  ASSERT_TRUE(base.initialize());
+  readVmRSS("After ::initialize()");
+
+  if (base.wasm_vm()->cloneable() != Cloneable::NotCloneable) {
+    auto clone1 = TestWasm(base.wasm_vm()->clone());
+    ASSERT_TRUE(clone1.wasm_vm() != nullptr);
+    readVmRSS("After clone1:::clone()");
+
+    if (base.wasm_vm()->cloneable() == Cloneable::CompiledBytecode) {
+      ASSERT_TRUE(clone1.initialize());
+      readVmRSS("After clone1::initialize()");
+    }
+
+    auto clone2 = TestWasm(base.wasm_vm()->clone());
+    ASSERT_TRUE(clone2.wasm_vm() != nullptr);
+    readVmRSS("After clone2:::clone()");
+
+    if (base.wasm_vm()->cloneable() == Cloneable::CompiledBytecode) {
+      ASSERT_TRUE(clone2.initialize());
+      readVmRSS("After clone2::initialize()");
+    }
+
+    auto clone3 = TestWasm(base.wasm_vm()->clone());
+    ASSERT_TRUE(clone3.wasm_vm() != nullptr);
+    readVmRSS("After clone3:::clone()");
+
+    if (base.wasm_vm()->cloneable() == Cloneable::CompiledBytecode) {
+      ASSERT_TRUE(clone3.initialize());
+      readVmRSS("After clone3::initialize()");
+    }
+  }
+
+  auto another_base = TestWasm(TestVm::newVm());
+  readVmRSS("After Another WasmBase::WasmBase()");
+
+  ASSERT_TRUE(another_base.load(source, false));
+  readVmRSS("After Another ::load()");
+
+  ASSERT_TRUE(another_base.initialize());
+  readVmRSS("After Another ::initialize()");
+}
+
 } // namespace
 } // namespace proxy_wasm
