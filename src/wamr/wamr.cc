@@ -47,7 +47,10 @@ struct HostFuncData {
 using HostFuncDataPtr = std::unique_ptr<HostFuncData>;
 
 wasm_engine_t *engine() {
-  static const auto engine = WasmEnginePtr(wasm_engine_new());
+  // FIXME: use some configuration in envoy.yml to control linux_perf_opt
+  static auto engine_config = WasmConfigPtr(wasm_config_new());
+  wasm_config_set_linux_perf_opt(engine_config.get(), true);
+  static const auto engine = WasmEnginePtr(wasm_engine_new_with_config(engine_config.get()));
   return engine.get();
 }
 

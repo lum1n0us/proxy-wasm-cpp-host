@@ -12,11 +12,23 @@ filegroup(
 cmake(
     name = "wamr_lib",
     generate_args = [
-        "-DWAMR_BUILD_LIBC_WASI=0",
-        "-DWAMR_BUILD_MULTI_MODULE=0",
-        "-DWAMR_BUILD_TAIL_CALL=1",
-        "-DWAMR_DISABLE_HW_BOUND_CHECK=0",
-        "-DWAMR_DISABLE_STACK_HW_BOUND_CHECK=1",
+        # disable WASI
+        "WAMR_BUILD_LIBC_WASI": "0",
+        # MVP
+        "WAMR_BULID_BULK_MEMORY": "1",
+        "WAMR_BULID_REF_TYPES": "1",
+        "WAMR_BUILD_SIMD": "1",
+        "WAMR_BUILD_TAIL_CALL": "1",
+        # name section
+        "WAMR_BUILD_CUSTOM_NAME_SECTION": "1",
+        "WAMR_BULID_LOAD_CUSTOM_SECTION": "1",
+        # trap information
+        "WAMR_BUILD_DUMP_CALL_STACK": "1",
+        # others
+        "WAMR_BUILD_MULTI_MODULE": "0",
+        "WAMR_BUILD_WASM_CACHE": "0",
+        "WAMR_DISABLE_HW_BOUND_CHECK": "0",
+        "WAMR_DISABLE_STACK_HW_BOUND_CHECK": "1",
         "-GNinja",
     ] + select({
         "@proxy_wasm_cpp_host//bazel:engine_wamr_jit": [
