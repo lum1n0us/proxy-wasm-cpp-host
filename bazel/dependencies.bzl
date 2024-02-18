@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 load("@bazel-zig-cc//toolchain:defs.bzl", zig_register_toolchains = "register_toolchains")
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 load("@proxy_wasm_cpp_host//bazel/cargo/wasmsign:crates.bzl", "wasmsign_fetch_remote_crates")
@@ -19,8 +20,9 @@ load("@proxy_wasm_cpp_host//bazel/cargo/wasmtime:crates.bzl", "wasmtime_fetch_re
 load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
 load("@rules_fuzzing//fuzzing:init.bzl", "rules_fuzzing_init")
 load("@rules_fuzzing//fuzzing:repositories.bzl", "rules_fuzzing_dependencies")
-load("@rules_python//python:pip.bzl", "pip_install")
 load("@rules_rust//rust:repositories.bzl", "rust_repositories", "rust_repository_set")
+
+# load("@rules_python//python:pip.bzl", "pip_parse")
 
 def proxy_wasm_cpp_host_dependencies():
     # Bazel extensions.
@@ -71,12 +73,10 @@ def proxy_wasm_cpp_host_dependencies():
     protobuf_deps()
 
     # V8 dependencies.
-
-    pip_install(
-        name = "v8_python_deps",
-        extra_pip_args = ["--require-hashes"],
-        requirements = "@v8//:bazel/requirements.txt",
-    )
+    # pip_parse(
+    #     name = "v8_python_deps",
+    #     requirements_lock = "@v8//:bazel/requirements.txt",
+    # )
 
     # Wasmtime dependencies.
 

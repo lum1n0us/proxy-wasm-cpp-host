@@ -58,17 +58,17 @@ def proxy_wasm_cpp_host_repositories():
     maybe(
         http_archive,
         name = "rules_fuzzing",
-        sha256 = "23bb074064c6f488d12044934ab1b0631e8e6898d5cf2f6bde087adb01111573",
-        strip_prefix = "rules_fuzzing-0.3.1",
-        url = "https://github.com/bazelbuild/rules_fuzzing/archive/v0.3.1.zip",
+        sha256 = "ff52ef4845ab00e95d29c02a9e32e9eff4e0a4c9c8a6bcf8407a2f19eb3f9190",
+        strip_prefix = "rules_fuzzing-0.4.1",
+        url = "https://github.com/bazelbuild/rules_fuzzing/archive/v0.4.1.zip",
     )
 
     maybe(
         http_archive,
         name = "rules_python",
-        sha256 = "a30abdfc7126d497a7698c29c46ea9901c6392d6ed315171a6df5ce433aa4502",
-        strip_prefix = "rules_python-0.6.0",
-        url = "https://github.com/bazelbuild/rules_python/archive/0.6.0.tar.gz",
+        sha256 = "c68bdc4fbec25de5b5493b8819cfc877c4ea299c0dcb15c244c5a00208cde311",
+        strip_prefix = "rules_python-0.31.0",
+        url = "https://github.com/bazelbuild/rules_python/archive/0.31.0.tar.gz",
     )
 
     maybe(
